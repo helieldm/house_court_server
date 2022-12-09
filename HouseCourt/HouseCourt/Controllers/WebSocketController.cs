@@ -1,5 +1,6 @@
 ﻿using System.Text;
-
+using HouseCourt.Context;
+using HouseCourt.Entities;
 namespace HouseCourt.Controllers;
 using System.Net.WebSockets;
 using Microsoft.AspNetCore.Mvc;
@@ -9,10 +10,11 @@ using Microsoft.AspNetCore.Mvc;
 public class WebSocketController : ControllerBase
 {
     private readonly ILogger<WebSocketController> _logger;
-
+    private ContextHouseCourt _context;
     public WebSocketController(ILogger<WebSocketController> logger)
     {
         _logger = logger;
+        _context = new ContextHouseCourt();
     }
     
     [HttpGet("/ws")]
@@ -29,6 +31,24 @@ public class WebSocketController : ControllerBase
         }
     }
     // </snippet>
+
+    [HttpPost]
+    [Route("/User")]
+    public async Task<IActionResult> TestFunction([FromBody] User user)
+    {
+        _context.Users.Add(user);
+        await _context.SaveChangesAsync();
+        return new JsonResult(user);
+    }
+
+    [HttpGet]
+    [Route("/User/{id}")]
+    public async Task<IActionResult> GetUser([FromRoute] int id)
+    {
+        List<User>users = _context.Users.Where(u => u.IdUser == id).ToList();
+        User user = users[0];
+        return new JsonResult(user);
+    }
 
     private async Task Echo(WebSocket webSocket)
     {
@@ -49,4 +69,5 @@ public class WebSocketController : ControllerBase
         await webSocket.CloseAsync(result.CloseStatus.Value, result.CloseStatusDescription, CancellationToken.None);
         _logger.Log(LogLevel.Information, "WebSocket connection closed");
     }
+
 }
