@@ -4,7 +4,7 @@ using System.Data.Entity;
 using System.ComponentModel.DataAnnotations;
 namespace HouseCourt.Entities;
 
-public class Unit
+public class Units
 {
     [Key]
     public int IdTypeReading { get; set; }

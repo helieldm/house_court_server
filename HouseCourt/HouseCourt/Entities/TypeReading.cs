@@ -9,4 +9,5 @@ public class TypeReading
     [Key]
     public int IdTypeReading { get; set; }
     public string NameTypeReading { get; set; }
+    public string MACAdress { get; set; } // primary key of House class
 }
