@@ -12,4 +12,8 @@ public class Sensor
     public int SensorId { get; set; }
     public string SensorName { get; set; }
     public string SensorAverageConsuption { get; set; }
+    public string MACAdress { get; set; } // primary key of House class
+
+    public virtual List<Consuptions>? Consuptions { get; set; }
+
 }

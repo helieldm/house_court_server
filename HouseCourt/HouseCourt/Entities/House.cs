@@ -13,4 +13,5 @@ public class House
     public string HouseName { get; set; }
     public virtual List<User>? Users { get; set; } // Users list taking reference MACAdress property of User class (primary key House table)
     public virtual List<Reading>? Readings { get; set; }
+    public virtual List<Sensor>? Sensors { get; set; }
 }

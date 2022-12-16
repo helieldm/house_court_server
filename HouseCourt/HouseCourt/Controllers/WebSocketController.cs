@@ -3,6 +3,7 @@ using HouseCourt.Context;
 using HouseCourt.Entities;
 namespace HouseCourt.Controllers;
 
+using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Net.WebSockets;
 using System.Runtime.CompilerServices;
@@ -35,9 +36,15 @@ public class WebSocketController : ControllerBase
         }
     }
     // </snippet>
+    #region Users
 
+    /// <summary>
+    /// Method qui permet d'ajouter de un nouvel utilisateur
+    /// </summary>
+    /// <param name="body">les informations de l'utilsateur à créer</param>
+    /// <returns>une réponse 200 avec les informations de l'utilisateur créer</returns>
     [HttpPost]
-    [Route("/User/Create")]
+    [Route("/User")]
     public async Task<IActionResult> CreateUser([FromBody] JsonUser body)
     {
         User user = new User
@@ -52,8 +59,13 @@ public class WebSocketController : ControllerBase
         return new JsonResult(user);
     }
 
-    [HttpPost]
-    [Route("/User/Update")]
+    /// <summary>
+    /// Method qui permet de modifier les informations d'un utilisateur
+    /// </summary>
+    /// <param name="jsonUser">les données de l'utilisateur pour modification</param>
+    /// <returns> une réponse status code 200 si ça c'est bien passer sinon 400 not found</returns>
+    [HttpPut]
+    [Route("/User")]
     public async Task<IActionResult> UpdateUser([FromBody] JsonUser jsonUser)
     {
         User user = _context.Users.Where(u => u.IdUser == jsonUser.IdUser).FirstOrDefault();
@@ -72,8 +84,13 @@ public class WebSocketController : ControllerBase
         }
     }
 
-    [HttpPost]
-    [Route("/User/Delete")]
+    /// <summary>
+    /// Method qui permet de supprimer un utilisateur en fonction des informations donner dans le body de la requête
+    /// </summary>
+    /// <param name="body">un json contenu dans le body de la requête</param>
+    /// <returns>une réponse avec un status code 200 si la donnée à bien été supprimer sinon une réponse avec un status code 400 not found</returns>
+    [HttpDelete]
+    [Route("/User")]
     public async Task<IActionResult> DeleteUser([FromBody] JsonUser body)
     {
         User user = _context.Users.Where(u => u.IdUser == body.IdUser).FirstOrDefault();
@@ -89,6 +106,11 @@ public class WebSocketController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Method qui permet de récupérer un utlisateur en fonction de son id
+    /// </summary>
+    /// <param name="id">l'id de l'utilisateur qui sera passer dans le chemin de la route</param>
+    /// <returns>un json avec les informations de l'utilsateur cible</returns>
     [HttpGet]
     [Route("/User/{id}")]
     public async Task<IActionResult> GetUserById([FromRoute] int id)
@@ -106,16 +128,28 @@ public class WebSocketController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Method qui récupère l'ensemble des utilisateur
+    /// </summary>
+    /// <returns>Un json</returns>
     [HttpGet]
-    [Route("/User/all")]
+    [Route("/Users")]
     public async Task<IActionResult> GetAllUsers()
     {
-        List<User> users = _context.Users.ToList();
+        List<User> users = await _context.Users.ToListAsync();
         return new JsonResult(users);
     }
+    #endregion
 
+    #region houses
+
+    /// <summary>
+    /// Method qui permet de créer une maison
+    /// </summary>
+    /// <param name="body">les informations de la maison à créer</param>
+    /// <returns>reponse status code 200 avec les informations de la maison créer</returns>
     [HttpPost]
-    [Route("/House/Create")]
+    [Route("/House")]
     public async Task<IActionResult> CreateHouse([FromBody] JsonHouse body)
     {
         House house = new House
@@ -129,6 +163,11 @@ public class WebSocketController : ControllerBase
         return Ok("Donnée enregistrée");
     }
 
+    /// <summary>
+    /// Method qui permet de récupérer les données d'une maison en fonction de l'id de la maison
+    /// </summary>
+    /// <param name="id">l'id de la maison donner dans le chemin de la route</param>
+    /// <returns>les informations de la maison en json</returns>
     [HttpGet]
     [Route("/House/{id}")]
     public async Task<IActionResult> GetHouseById([FromRoute]string id)
@@ -146,16 +185,28 @@ public class WebSocketController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Method qui permet de récupérer toutes les maisons avec leurs informations
+    /// </summary>
+    /// <returns>l'ensemble des informations de chaques maison sous la forme d'un json</returns>
     [HttpGet]
-    [Route("/House/All")]
+    [Route("/Houses")]
     public async Task<IActionResult> GetAllHouses()
     {
-        List<House> houses = _context.Houses.ToList();
+        List<House> houses = await _context.Houses.ToListAsync();
         return new JsonResult(houses);
     }
+    #endregion
 
+    #region Reading
+
+    /// <summary>
+    /// Method qui permet de créer une lecture (Reading)
+    /// </summary>
+    /// <param name="body">les informations de la lecture à créer</param>
+    /// <returns>un status code 200 une fois la consommation créer</returns>
     [HttpPost]
-    [Route("/Reading/Create")]
+    [Route("/Reading")]
     public async Task<IActionResult> CreateReading([FromBody] JsonReading body)
     {
             Reading reading = new Reading
@@ -169,9 +220,76 @@ public class WebSocketController : ControllerBase
             await _context.SaveChangesAsync();
             return Ok($"La donnée avec l'id: {reading.IdReading} à été enregistre pour la maison {body.MACAdress}");
     }
+    #endregion
+
+    #region consuptions
+
+    /// <summary>
+    /// Method qui permet de créer une consommation
+    /// </summary>
+    /// <param name="body">les informations de la consommations à créer</param>
+    /// <returns> un status code 200 une fois la consommation créer</returns>
+    [HttpPost]
+    [Route("/Consuption")]
+    public async Task<IActionResult> CreateConsuption([FromBody] JsonConsuption body)
+    {
+        var consuption = new Consuptions
+        {
+            ConsuptionsId = body.ConsuptionsId,
+            ConsuptionsDate = body.ConsuptionsDate,
+            ConsuptionsDuration = body.ConsuptionsDuration,
+            SensorId = body.SensorId
+        };
+        _context.Consuptions.Add(consuption);
+        await _context.SaveChangesAsync();
+        return Ok("Les informations de la consommation on été enregistrer");
+    }
+    #endregion
+
+    #region sensors
+
+    /// <summary>
+    /// Method qui permet de créer un capteur (sensor) pour une maison
+    /// </summary>
+    /// <param name="body">les informations du capteur (sensor) à créer</param>
+    /// <returns>les informations du capteur (sensor) sour la forme d'un json avec une réponse status code 200</returns>
+    [HttpPost]
+    [Route("/Sensor")]
+    public async Task<IActionResult> CreateSensor([FromBody] JsonSensor body)
+    {
+        var sensor = new Sensor
+        {
+            SensorId = body.SensorId,
+            SensorName = body.SensorName,
+            SensorAverageConsuption = 0.ToString(),
+            MACAdress = body.MACAdress
+        };
+        _context.Sensors.Add(sensor);
+        await _context.SaveChangesAsync();
+        return Ok($"Le capteur à été enregister dans la base pour la maison {sensor.MACAdress}");
+    }
 
 
-
+    /// <summary>
+    /// Method qui permet de récupére un capteur (sensor) par id pour une maison
+    /// </summary>
+    /// <param name="id">l'id cible du capteur</param>
+    /// <returns>les informations du capteur (sensor) sour la forme d'un json avec une réponse status code 200</returns>
+    [HttpGet]
+    [Route("/Sensor/{id}")]
+    public async Task<IActionResult> GetSensorById([FromRoute] int id)
+    {
+        Sensor sensor = await _context.Sensors.Where(s => s.SensorId == id).FirstOrDefaultAsync();
+        if(sensor != null)
+        {
+            return new JsonResult(sensor);
+        }
+        else
+        {
+            return NotFound("Aucun capteur n'a été trouver");
+        }
+    }
+    #endregion
 
     private async Task Echo(WebSocket webSocket)
     {
@@ -193,6 +311,7 @@ public class WebSocketController : ControllerBase
         _logger.Log(LogLevel.Information, "WebSocket connection closed");
     }
 
+    #region Class utilitaire
     public class JsonUser
     {
         public int IdUser { get; set; }
@@ -200,7 +319,6 @@ public class WebSocketController : ControllerBase
         public string UserPassword { get; set; }
         public string MacAdress { get; set; }
     }
-
     public class JsonHouse
     {
         public string MAC { get; set; }
@@ -214,4 +332,21 @@ public class WebSocketController : ControllerBase
         public string MACAdress { get; set; }
     }
 
+    public class JsonSensor
+    {
+        public int SensorId { get; set; }
+        public string SensorName { get; set; }
+        public string SensorAverageConsuption { get; set; }
+        public string MACAdress { get; set; }
+    }
+
+    public class JsonConsuption
+    {
+        public int ConsuptionsId { get; set; }
+        public DateTime ConsuptionsDate { get; set; }
+        public float ConsuptionsDuration { get; set; }
+        public int SensorId { get; set; }
+    }
+
+    #endregion
 }

@@ -10,7 +10,7 @@ namespace HouseCourt.Entities
         public int IdReading { get; set; }
         public int ValueReading { get; set; }
         public DateTime DateReading { get; set; }
-        public string MACAdress { get; set; }
+        public string MACAdress { get; set; } // primary key of House class
 
     }
 }

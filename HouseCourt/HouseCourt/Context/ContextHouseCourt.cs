@@ -28,5 +28,7 @@ namespace HouseCourt.Context
         public DbSet<TypeReading>? TypeReading { get; set; }
         public DbSet<User>? Users { get; set; }
         public DbSet<Units>? Unit { get; set; }
+        public DbSet<Sensor>? Sensors { get; set; }
+        public DbSet<Consuptions>? Consuptions { get; set; }
     }
 }

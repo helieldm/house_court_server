@@ -12,4 +12,5 @@ public class Consuptions
     public int ConsuptionsId { get; set; }
     public DateTime ConsuptionsDate { get; set; }
     public float ConsuptionsDuration { get; set; }
+    public int SensorId { get;set; }
 }
