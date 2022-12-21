@@ -1,6 +1,14 @@
 using HouseCourt.Context;
+using HouseCourt.Helper;
+using HouseCourt.Service;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddScoped<HouseCourtContext>();
+builder.Services.AddScoped<MessageService>();
+builder.Services.AddScoped<HouseService>();
+builder.Services.AddScoped<ReadingService>();
+builder.Services.AddScoped<WebSocketService>();
 
 // Add services to the container.
 

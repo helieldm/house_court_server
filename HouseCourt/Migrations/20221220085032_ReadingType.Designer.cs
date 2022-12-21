@@ -3,6 +3,7 @@ using System;
 using HouseCourt.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HouseCourt.Migrations
 {
     [DbContext(typeof(HouseCourtContext))]
-    partial class HouseCourtContextModelSnapshot : ModelSnapshot
+    [Migration("20221220085032_ReadingType")]
+    partial class ReadingType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -138,21 +141,7 @@ namespace HouseCourt.Migrations
 
                     b.HasIndex("UnitId");
 
-                    b.ToTable("Type");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Temperature",
-                            UnitId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Humidity",
-                            UnitId = 2
-                        });
+                    b.ToTable("TypeReading");
                 });
 
             modelBuilder.Entity("HouseCourt.Entities.Unit", b =>
@@ -170,18 +159,6 @@ namespace HouseCourt.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Unit");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "°C"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "%"
-                        });
                 });
 
             modelBuilder.Entity("HouseCourt.Entities.User", b =>

@@ -8,9 +8,10 @@ namespace HouseCourt.Entities
     {
         [Key]
         public int Id { get; set; }
-        public int Value { get; set; }
+        public float Value { get; set; }
         public DateTime Date { get; set; }
         public House House { get; set; } // primary key of House class
+        public Type Type { get; set; }
 
     }
 }
