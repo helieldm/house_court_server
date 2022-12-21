@@ -14,6 +14,10 @@ public static class MessageHelper
     public const String DhtData = "DHT";
     
     public const String Door = "DOOR";
-    
     public const String Window = "WINDOW";
+    public const String Vents = "VENTS";
+    public const String ON = "ON";
+    public const String OFF = "OFF";
+    
+    
 }

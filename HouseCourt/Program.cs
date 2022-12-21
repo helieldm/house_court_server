@@ -9,6 +9,7 @@ builder.Services.AddScoped<MessageService>();
 builder.Services.AddScoped<HouseService>();
 builder.Services.AddScoped<ReadingService>();
 builder.Services.AddScoped<WebSocketService>();
+builder.Services.AddScoped<TaskService>();
 
 // Add services to the container.
 

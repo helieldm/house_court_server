@@ -1,5 +1,7 @@
 ﻿using HouseCourt.Context;
+using HouseCourt.Dto.Input;
 using HouseCourt.Entities;
+using HouseCourt.Helper;
 
 namespace HouseCourt.Service;
 
@@ -31,5 +33,25 @@ public class HouseService
 
             _context.SaveChanges();
         }
+    }
+
+    public void ToggleVents(ToggleTaskDto taskDto)
+    {
+        if (taskDto.Action.Equals("ON") || taskDto.Action.Equals("OFF"))
+        {
+            _context.Tasks.Add(new Entities.Task()
+            {
+                HouseMACAdress = taskDto.HouseMacAddress,
+                Message = MessageHelper.Begin +
+                          MessageHelper.Separator +
+                          MessageHelper.Vents +
+                          MessageHelper.Separator +
+                          taskDto.Action +
+                          MessageHelper.Separator +
+                          MessageHelper.End
+            });
+        }
+
+        _context.SaveChanges();
     }
 }

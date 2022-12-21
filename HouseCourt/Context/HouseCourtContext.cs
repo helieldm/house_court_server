@@ -16,6 +16,7 @@ namespace HouseCourt.Context
         public DbSet<Unit>? Unit { get; set; }
         public DbSet<Sensor>? Sensors { get; set; }
         public DbSet<Consumption>? Consumptions { get; set; }
+        public DbSet<Entities.Task>? Tasks { get; set; }
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

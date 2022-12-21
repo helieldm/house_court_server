@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using HouseCourt.Dto.Input;
+using HouseCourt.Entities;
+using HouseCourt.Service;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HouseCourt.Controllers;
 
@@ -7,18 +10,22 @@ namespace HouseCourt.Controllers;
 public class HouseController : ControllerBase
 {
     private readonly ILogger<WebSocketController> _logger;
+    private readonly HouseService _houseService;
 
-    public HouseController(ILogger<WebSocketController> logger)
+    public HouseController(ILogger<WebSocketController> logger, HouseService houseService)
     {
+        _houseService = houseService;
         _logger = logger;
     }
 
     // Route register qui check l'adresse MAC de la maison avant de l'enregistrer -> WS
 
-    [HttpPut("door")]
-    public IActionResult OpenTheDoor()
+    [HttpPut("vents")]
+    public IActionResult ToggleVents([FromBody] ToggleTaskDto taskDto)
     {
         _logger.Log(LogLevel.Information, "Open the door");
+        
+        _houseService.ToggleVents(taskDto);
         
         return Ok();
     }

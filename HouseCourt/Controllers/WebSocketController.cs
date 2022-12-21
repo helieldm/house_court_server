@@ -26,7 +26,7 @@ public class WebSocketController : ControllerBase
     }
     
     [HttpGet("/")]
-    public async Task Get()
+    public async System.Threading.Tasks.Task Get()
     {
         if (HttpContext.WebSockets.IsWebSocketRequest)
         {
