@@ -20,7 +20,7 @@ public class HouseController : ControllerBase
 
     // Route register qui check l'adresse MAC de la maison avant de l'enregistrer -> WS
 
-    [HttpPut("vents")]
+    [HttpPost("vents")]
     public IActionResult ToggleVents([FromBody] ToggleTaskDto taskDto)
     {
         _logger.Log(LogLevel.Information, "Open the door");
@@ -30,4 +30,33 @@ public class HouseController : ControllerBase
         return Ok();
     }
     
+    [HttpPost("window")]
+    public IActionResult ToggleWindow([FromBody] ToggleTaskDto taskDto)
+    {
+        _logger.Log(LogLevel.Information, "Open the door");
+        
+        _houseService.ToggleWindow(taskDto);
+        
+        return Ok();
+    }
+    
+    [HttpPost("door")]
+    public IActionResult ToggleDoor([FromBody] ToggleTaskDto taskDto)
+    {
+        _logger.Log(LogLevel.Information, "Open the door");
+        
+        _houseService.ToggleDoor(taskDto);
+        
+        return Ok();
+    }
+    
+    [HttpPost("alarm")]
+    public IActionResult ToggleAlarm([FromBody] ToggleTaskDto taskDto)
+    {
+        _logger.Log(LogLevel.Information, "Open the door");
+        
+        _houseService.ToggleAlarm(taskDto);
+        
+        return Ok();
+    }
 }

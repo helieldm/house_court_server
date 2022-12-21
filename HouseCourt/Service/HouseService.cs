@@ -37,7 +37,7 @@ public class HouseService
 
     public void ToggleVents(ToggleTaskDto taskDto)
     {
-        if (taskDto.Action.Equals("ON") || taskDto.Action.Equals("OFF"))
+        if (taskDto.Action.Equals(MessageHelper.On) || taskDto.Action.Equals(MessageHelper.Off))
         {
             _context.Tasks.Add(new Entities.Task()
             {
@@ -45,6 +45,66 @@ public class HouseService
                 Message = MessageHelper.Begin +
                           MessageHelper.Separator +
                           MessageHelper.Vents +
+                          MessageHelper.Separator +
+                          taskDto.Action +
+                          MessageHelper.Separator +
+                          MessageHelper.End
+            });
+        }
+
+        _context.SaveChanges();
+    }
+    
+    public void ToggleWindow(ToggleTaskDto taskDto)
+    {
+        if (taskDto.Action.Equals(MessageHelper.Open) || taskDto.Action.Equals(MessageHelper.Close))
+        {
+            _context.Tasks.Add(new Entities.Task()
+            {
+                HouseMACAdress = taskDto.HouseMacAddress,
+                Message = MessageHelper.Begin +
+                          MessageHelper.Separator +
+                          MessageHelper.Window +
+                          MessageHelper.Separator +
+                          taskDto.Action +
+                          MessageHelper.Separator +
+                          MessageHelper.End
+            });
+        }
+
+        _context.SaveChanges();
+    }
+    
+    public void ToggleDoor(ToggleTaskDto taskDto)
+    {
+        if (taskDto.Action.Equals(MessageHelper.Open) || taskDto.Action.Equals(MessageHelper.Close))
+        {
+            _context.Tasks.Add(new Entities.Task()
+            {
+                HouseMACAdress = taskDto.HouseMacAddress,
+                Message = MessageHelper.Begin +
+                          MessageHelper.Separator +
+                          MessageHelper.Door +
+                          MessageHelper.Separator +
+                          taskDto.Action +
+                          MessageHelper.Separator +
+                          MessageHelper.End
+            });
+        }
+
+        _context.SaveChanges();
+    }
+    
+    public void ToggleAlarm(ToggleTaskDto taskDto)
+    {
+        if (taskDto.Action.Equals(MessageHelper.On) || taskDto.Action.Equals(MessageHelper.Off))
+        {
+            _context.Tasks.Add(new Entities.Task()
+            {
+                HouseMACAdress = taskDto.HouseMacAddress,
+                Message = MessageHelper.Begin +
+                          MessageHelper.Separator +
+                          MessageHelper.Alarm +
                           MessageHelper.Separator +
                           taskDto.Action +
                           MessageHelper.Separator +

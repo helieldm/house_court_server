@@ -16,8 +16,12 @@ public static class MessageHelper
     public const String Door = "DOOR";
     public const String Window = "WINDOW";
     public const String Vents = "VENTS";
-    public const String ON = "ON";
-    public const String OFF = "OFF";
+    public const String Alarm = "ALARM";
+    public const String On = "ON";
+    public const String Off = "OFF";
+    public const String Open = "OPEN";
+    public const String Close = "CLOSE";
+    
     
     
 }
