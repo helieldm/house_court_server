@@ -18,8 +18,6 @@ public class HouseController : ControllerBase
         _logger = logger;
     }
 
-    // Route register qui check l'adresse MAC de la maison avant de l'enregistrer -> WS
-
     [HttpPost("vents")]
     public IActionResult ToggleVents([FromBody] ToggleTaskDto taskDto)
     {

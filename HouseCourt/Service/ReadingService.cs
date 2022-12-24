@@ -1,6 +1,9 @@
 ﻿using System.Globalization;
 using HouseCourt.Context;
+using HouseCourt.Dto.Public;
 using HouseCourt.Entities;
+using HouseCourt.Factory;
+using Microsoft.EntityFrameworkCore;
 
 namespace HouseCourt.Service;
 
@@ -45,5 +48,22 @@ public class ReadingService
 
             _context.SaveChanges();
         }
+    }
+
+    public List<Reading> GetReadingsFromDateRange(String houseMacAddress, String typeName , DateTime start, DateTime end)
+    {
+        return _context.Readings.Where(x => x.House.MACAdress == houseMacAddress && x.Date >= start && x.Date <= end && x.Type.Name == typeName)
+            .ToList();
+    }
+
+    public ReadingDto GetLastReadingByType(String houseMacAddress, String typeName)
+    {
+        if (!_houseService.GetByMacAddress(houseMacAddress).Any())
+        {
+            return null;
+        }
+        DateTime oldestRecord = _context.Readings.Where(x => x.House.MACAdress == houseMacAddress && x.Type.Name == typeName).Max(x => x.Date);
+
+        return ReadingFactory.ConvertToPublicDto( _context.Readings.Where(x => x.House.MACAdress == houseMacAddress && x.Date == oldestRecord && x.Type.Name == typeName).Include(x => x.Type.Unit).FirstOrDefault());
     }
 }
