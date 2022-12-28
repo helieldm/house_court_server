@@ -14,6 +14,7 @@ public static class MessageHelper
     public const String DhtData = "DHT";
 
     public const String State = "STATE";
+    public const String Led = "LED";
     
     public const String Door = "DOOR";
     public const String Window = "WINDOW";

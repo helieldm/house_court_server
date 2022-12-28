@@ -21,7 +21,7 @@ public class HouseController : ControllerBase
     [HttpPost("vents")]
     public IActionResult ToggleVents([FromBody] ToggleTaskDto taskDto)
     {
-        _logger.Log(LogLevel.Information, "Open the door");
+        _logger.Log(LogLevel.Information, "Toggle the vents");
         
         _houseService.ToggleVents(taskDto);
         
@@ -31,7 +31,7 @@ public class HouseController : ControllerBase
     [HttpPost("window")]
     public IActionResult ToggleWindow([FromBody] ToggleTaskDto taskDto)
     {
-        _logger.Log(LogLevel.Information, "Open the door");
+        _logger.Log(LogLevel.Information, "Toggle the window");
         
         _houseService.ToggleWindow(taskDto);
         
@@ -41,7 +41,7 @@ public class HouseController : ControllerBase
     [HttpPost("door")]
     public IActionResult ToggleDoor([FromBody] ToggleTaskDto taskDto)
     {
-        _logger.Log(LogLevel.Information, "Open the door");
+        _logger.Log(LogLevel.Information, "Toggle the door");
         
         _houseService.ToggleDoor(taskDto);
         
@@ -51,9 +51,19 @@ public class HouseController : ControllerBase
     [HttpPost("alarm")]
     public IActionResult ToggleAlarm([FromBody] ToggleTaskDto taskDto)
     {
-        _logger.Log(LogLevel.Information, "Open the door");
+        _logger.Log(LogLevel.Information, "Toggle alarm");
         
         _houseService.ToggleAlarm(taskDto);
+        
+        return Ok();
+    }
+    
+    [HttpPut("led")]
+    public IActionResult UpdateLed([FromBody] LedDto taskDto)
+    {
+        _logger.Log(LogLevel.Information, "Led");
+        
+        _houseService.ToggleLed(taskDto);
         
         return Ok();
     }

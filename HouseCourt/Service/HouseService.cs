@@ -114,4 +114,29 @@ public class HouseService
 
         _context.SaveChanges();
     }
+
+    public void ToggleLed(LedDto ledDto)
+    {
+        _context.Tasks.Add(new Entities.Task()
+        {
+            HouseMACAdress = ledDto.HouseMacAddress,
+            Message = MessageHelper.Begin +
+                      MessageHelper.Separator +
+                      MessageHelper.Led +
+                      MessageHelper.Separator +
+                      ledDto.Number +
+                      MessageHelper.Separator +
+                      ledDto.Red +
+                      MessageHelper.Separator +
+                      ledDto.Green +
+                      MessageHelper.Separator +
+                      ledDto.Blue +
+                      MessageHelper.Separator +
+                      ledDto.Intensity +
+                      MessageHelper.Separator +
+                      MessageHelper.End
+        });
+        
+        _context.SaveChanges();
+    }
 }
