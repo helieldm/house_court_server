@@ -36,7 +36,7 @@ public class WebSocketService
 
             result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
             _logger.Log(LogLevel.Information, $"Message received from Client : {Encoding.UTF8.GetString(buffer)}");
-                
+
         }
         await webSocket.CloseAsync(result.CloseStatus.Value, result.CloseStatusDescription, CancellationToken.None);
         _logger.Log(LogLevel.Information, "WebSocket connection closed");

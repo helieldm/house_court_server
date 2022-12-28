@@ -9,11 +9,12 @@ namespace HouseCourt.Entities;
 public class Sensor
 {
     [Key]
-    public int SensorId { get; set; }
-    public string SensorName { get; set; }
-    public string SensorAverageConsuption { get; set; }
-    public string MACAdress { get; set; } // primary key of House class
-
-    public virtual List<Consumption>? Consuptions { get; set; }
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public string? AverageConsumption { get; set; }
+    public string State { get; set; }
+    public House House { get; set; }
+    public String HouseMACAdress { get; set; }
+    public virtual List<Consumption>? Consumptions { get; set; }
 
 }

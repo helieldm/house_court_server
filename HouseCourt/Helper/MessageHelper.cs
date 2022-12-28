@@ -12,6 +12,8 @@ public static class MessageHelper
     
     // Indicates a temp and humidity reading message
     public const String DhtData = "DHT";
+
+    public const String State = "STATE";
     
     public const String Door = "DOOR";
     public const String Window = "WINDOW";

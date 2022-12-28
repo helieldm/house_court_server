@@ -10,6 +10,7 @@ builder.Services.AddScoped<HouseService>();
 builder.Services.AddScoped<ReadingService>();
 builder.Services.AddScoped<WebSocketService>();
 builder.Services.AddScoped<TaskService>();
+builder.Services.AddScoped<HouseStateService>();
 
 // Add services to the container.
 
@@ -39,5 +40,9 @@ app.UseWebSockets(webSocketOptions);
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseCors(x => x.AllowAnyHeader()
+    .AllowAnyMethod()
+    .WithOrigins("http://localhost:8000"));
 
 app.Run();
