@@ -5,12 +5,14 @@ namespace HouseCourt.Service;
 
 public class MessageService
 {
+    private readonly ILogger<MessageService> _logger;
     private HouseService _houseService;
     private ReadingService _readingService;
     private HouseStateService _houseStateService;
 
-    public MessageService(HouseService houseService, ReadingService readingService, HouseStateService houseStateService)
+    public MessageService(ILogger<MessageService> logger,HouseService houseService, ReadingService readingService, HouseStateService houseStateService)
     {
+        _logger = logger;
         _houseService = houseService;
         _readingService = readingService;
         _houseStateService = houseStateService;
@@ -32,6 +34,8 @@ public class MessageService
     public void Decode(String message)
     {
         message = message.Trim();
+        
+        _logger.Log(LogLevel.Information, $"Decoding : {message}");
         
         if (message.StartsWith(MessageHelper.Begin) && message.Contains(MessageHelper.End))
         {

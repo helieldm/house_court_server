@@ -124,8 +124,6 @@ public class HouseService
                       MessageHelper.Separator +
                       MessageHelper.Led +
                       MessageHelper.Separator +
-                      ledDto.Number +
-                      MessageHelper.Separator +
                       ledDto.Red +
                       MessageHelper.Separator +
                       ledDto.Green +
